@@ -1,0 +1,29 @@
+{{ define "content" }}
+<h1>Customers</h1>
+<table border="1" cellpadding="8" cellspacing="0">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Company</th>
+			<th>Contact</th>
+			<th>Title</th>
+			<th>City</th>
+			<th>Country</th>
+			<th>Phone</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{ range .Customers }}
+		<tr>
+			<td>{{ .CustomerID }}</td>
+			<td>{{ .CompanyName }}</td>
+			<td>{{ .ContactName }}</td>
+			<td>{{ .ContactTitle }}</td>
+			<td>{{ .City }}</td>
+			<td>{{ .Country }}</td>
+			<td>{{ .Phone }}</td>
+		</tr>
+		{{ end }}
+	</tbody>
+</table>
+{{ end }}
