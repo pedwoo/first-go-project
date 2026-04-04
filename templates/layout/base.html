@@ -1,29 +1,44 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>{{ .Title }}</title>
-		<script src="https://unpkg.com/htmx.org@2.0.4"></script>
-		<style>
-			body {
-				font-family: sans-serif;
-				margin: 0;
-				padding: 2rem;
-			}
-			nav {
-				margin-bottom: 2rem;
-			}
-			nav a {
-				margin-right: 1rem;
-			}
-		</style>
-	</head>
-	<body>
-		<nav>
-			<a href="/">Dashboard</a>
-			<a href="/customers">Customers</a>
-		</nav>
-		<main>{{ template "content" . }}</main>
-	</body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ .Title }} — Northwind</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-logo">Northwind</div>
+        <div class="nav-section">Overview</div>
+        <a href="/" class="nav-link {{ if eq .Title "Dashboard" }}active{{ end }}">Dashboard</a>
+        <div class="nav-section">Data</div>
+        <a href="/customers" class="nav-link {{ if eq .Title "Customers" }}active{{ end }}">Customers</a>
+    </nav>
+    <main class="main-content">
+        {{ template "content" . }}
+    </main>
+    <div id="modal-container"></div>
+    <script>
+        function closeModal() {
+            document.getElementById('modal-container').innerHTML = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        document.body.addEventListener('htmx:afterRequest', function(evt) {
+            if (evt.detail.xhr.status === 409) {
+                var banner = document.getElementById('error-banner');
+                if (banner) {
+                    banner.style.display = 'block';
+                    banner.innerText = evt.detail.xhr.responseText;
+                }
+            }
+        });
+    </script>
+</body>
 </html>

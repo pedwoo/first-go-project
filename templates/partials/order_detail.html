@@ -1,0 +1,70 @@
+{{ define "order_detail.html" }}
+<div class="modal-overlay" onclick="closeModal()">
+	<div class="modal" onclick="event.stopPropagation()">
+		<div class="modal-header">
+			<div>
+				<div class="modal-eyebrow">Order Details</div>
+				<h2 style="margin: 0">{{ .CustomerName }}</h2>
+			</div>
+			<button class="modal-close" onclick="closeModal()">✕</button>
+		</div>
+
+		<div class="modal-grid">
+			<div class="modal-section">
+				<div class="modal-section-title">Staff & Logistics</div>
+				<div class="modal-row">
+					<span>Handled by</span><strong>{{ .EmployeeName }}</strong>
+				</div>
+				<div class="modal-row">
+					<span>Shipped via</span><strong>{{ .ShipperName }}</strong>
+				</div>
+				<div class="modal-row">
+					<span>Required by</span><strong>{{ .RequiredDate }}</strong>
+				</div>
+				<div class="modal-row">
+					<span>Shipped on</span><strong>{{ .ShippedDate }}</strong>
+				</div>
+			</div>
+
+			<div class="modal-section">
+				<div class="modal-section-title">Shipping Address</div>
+				<div class="modal-row">
+					<span>Name</span><strong>{{ .ShipName }}</strong>
+				</div>
+				<div class="modal-row">
+					<span>Address</span><strong>{{ .ShipAddress }}</strong>
+				</div>
+				<div class="modal-row">
+					<span>City</span><strong>{{ .ShipCity }}</strong>
+				</div>
+				<div class="modal-row">
+					<span>Region</span><strong>{{ .ShipRegion }}</strong>
+				</div>
+				<div class="modal-row">
+					<span>Postal Code</span
+					><strong>{{ .ShipPostalCode }}</strong>
+				</div>
+				<div class="modal-row">
+					<span>Country</span><strong>{{ .ShipCountry }}</strong>
+				</div>
+			</div>
+
+			<div class="modal-section">
+				<div class="modal-section-title">Financials</div>
+				<div class="modal-row">
+					<span>Freight</span
+					><strong>${{ printf "%.2f" .Freight }}</strong>
+				</div>
+				<div class="modal-row">
+					<span>Status</span>
+					{{ if .Shipped }}
+					<span class="badge shipped">Shipped</span>
+					{{ else }}
+					<span class="badge pending">Pending</span>
+					{{ end }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{ end }}

@@ -1,0 +1,21 @@
+{{ define "customer_rows.html" }} {{ range . }}
+<tr id="customer-{{ .CustomerID }}">
+	<td>{{ .CompanyName }}</td>
+	<td>{{ .ContactName }}</td>
+	<td>{{ .ContactTitle }}</td>
+	<td>{{ .City }}</td>
+	<td>{{ .Country }}</td>
+	<td>{{ .Phone }}</td>
+	<td>
+		<button
+			class="btn-danger"
+			hx-delete="/customers/{{ .CustomerID }}"
+			hx-target="#customer-{{ .CustomerID }}"
+			hx-swap="outerHTML"
+			hx-confirm="Are you sure you want to delete this customer?"
+		>
+			Delete
+		</button>
+	</td>
+</tr>
+{{ end }} {{ end }}

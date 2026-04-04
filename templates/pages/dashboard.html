@@ -1,4 +1,86 @@
 {{ define "content" }}
-<h1>Welcome to your dashboard</h1>
-<p>Your app is running and connected to Supabase.</p>
+<h1>Dashboard</h1>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-accent blue"></div>
+        <div class="stat-label">Total Customers</div>
+        <div class="stat-value">{{ .Stats.TotalCustomers }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-accent green"></div>
+        <div class="stat-label">Total Orders</div>
+        <div class="stat-value">{{ .Stats.TotalOrders }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-accent amber"></div>
+        <div class="stat-label">Total Products</div>
+        <div class="stat-value">{{ .Stats.TotalProducts }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-accent red"></div>
+        <div class="stat-label">Total Revenue</div>
+        <div class="stat-value">${{ printf "%.0f" .Stats.TotalRevenue }}</div>
+    </div>
+</div>
+
+<div class="dashboard-grid">
+    <div class="card">
+        <h2>Recent Orders</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Freight</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range .RecentOrders }}
+                <tr
+                    hx-get="/orders/{{ .OrderID }}"
+                    hx-target="#modal-container"
+                    hx-swap="innerHTML"
+                    style="cursor: pointer;">
+                    <td>{{ .CustomerName }}</td>
+                    <td>{{ .OrderDate }}</td>
+                    <td>${{ printf "%.2f" .Freight }}</td>
+                    <td>
+                        {{ if .Shipped }}
+                            <span class="badge shipped">Shipped</span>
+                        {{ else }}
+                            <span class="badge pending">Pending</span>
+                        {{ end }}
+                    </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Orders by Country</h2>
+        <div class="row-list">
+            {{ range .OrdersByCountry }}
+            <div class="row-list-item">
+                <span>{{ .Country }}</span>
+                <strong>{{ .Total }}</strong>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Top Products by Revenue</h2>
+    <div class="row-list">
+        {{ range $i, $p := .TopProducts }}
+        <div class="row-list-item">
+            <span><span class="row-rank">#{{ add $i 1 }}</span>{{ $p.ProductName }}</span>
+            <strong>${{ printf "%.2f" $p.Revenue }}</strong>
+        </div>
+        {{ end }}
+    </div>
+</div>
 {{ end }}

@@ -1,29 +1,52 @@
 {{ define "content" }}
 <h1>Customers</h1>
-<table border="1" cellpadding="8" cellspacing="0">
-	<thead>
-		<tr>
-			<th>ID</th>
-			<th>Company</th>
-			<th>Contact</th>
-			<th>Title</th>
-			<th>City</th>
-			<th>Country</th>
-			<th>Phone</th>
-		</tr>
-	</thead>
-	<tbody>
-		{{ range .Customers }}
-		<tr>
-			<td>{{ .CustomerID }}</td>
-			<td>{{ .CompanyName }}</td>
-			<td>{{ .ContactName }}</td>
-			<td>{{ .ContactTitle }}</td>
-			<td>{{ .City }}</td>
-			<td>{{ .Country }}</td>
-			<td>{{ .Phone }}</td>
-		</tr>
-		{{ end }}
-	</tbody>
-</table>
+<div id="error-banner" class="error-banner"></div>
+
+<input
+    type="search"
+    name="q"
+    placeholder="Search by company, contact or country..."
+    hx-get="/customers/search"
+    hx-trigger="keyup changed delay:300ms"
+    hx-target="#customers-tbody"
+    class="search-input"
+/>
+
+<div class="card">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Title</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Phone</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="customers-tbody">
+            {{ range .Customers }}
+            <tr id="customer-{{ .CustomerID }}">
+                <td>{{ .CompanyName }}</td>
+                <td>{{ .ContactName }}</td>
+                <td>{{ .ContactTitle }}</td>
+                <td>{{ .City }}</td>
+                <td>{{ .Country }}</td>
+                <td>{{ .Phone }}</td>
+                <td>
+                    <button
+                        class="btn-danger"
+                        hx-delete="/customers/{{ .CustomerID }}"
+                        hx-target="#customer-{{ .CustomerID }}"
+                        hx-swap="outerHTML"
+                        hx-confirm="Are you sure you want to delete this customer?">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</div>
 {{ end }}
