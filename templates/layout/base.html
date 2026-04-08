@@ -16,6 +16,11 @@
         <a href="/" class="nav-link {{ if eq .Title "Dashboard" }}active{{ end }}">Dashboard</a>
         <div class="nav-section">Data</div>
         <a href="/customers" class="nav-link {{ if eq .Title "Customers" }}active{{ end }}">Customers</a>
+        <a href="/orders" class="nav-link {{ if eq .Title "Orders" }}active{{ end }}">Orders</a>
+        <a href="/products" class="nav-link {{ if eq .Title "Products" }}active{{ end }}">Products</a>
+        <a href="/employees" class="nav-link {{ if eq .Title "Employees" }}active{{ end }}">Employees</a>
+        <a href="/suppliers" class="nav-link {{ if eq .Title "Suppliers" }}active{{ end }}">Suppliers</a>
+        <a href="/categories" class="nav-link {{ if eq .Title "Categories" }}active{{ end }}">Categories</a>
     </nav>
     <main class="main-content">
         {{ template "content" . }}

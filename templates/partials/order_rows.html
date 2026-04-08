@@ -1,0 +1,26 @@
+{{ define "order_rows.html" }}
+{{ range . }}
+<tr id="order-{{ .orderID }}"
+    <!-- hx-get="/orders/{{ .OrderID }}"
+    hx-target="#modal-container"
+    hx-swap="innerHTML"
+    style="cursor: pointer;"> -->
+    <td>{{ .CustomerName }}</td>
+    <td>{{ .EmployeeName }}</td>
+    <td>{{ .OrderDate }}</td>
+    <td>{{ .RequiredDate }}</td>
+    <td>{{ .ShippedDate }}</td>
+    <td>{{ .ShipperName }}</td>
+    <td>{{ .ShipCity }}</td>
+    <td>{{ .ShipCountry }}</td>
+    <td>${{ printf "%.2f" .Freight }}</td>
+    <td>
+        {{ if .Shipped }}
+            <span class="badge shipped">Shipped</span>
+        {{ else }}
+            <span class="badge pending">Pending</span>
+        {{ end }}
+    </td>
+</tr>
+{{ end }}
+{{ end }}

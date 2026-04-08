@@ -79,6 +79,22 @@ func main() {
 	r.Get("/customers/search", handlers.CustomersSearch())
 	r.Delete("/customers/{id}", handlers.CustomersDelete())
 
+	r.Get("/orders", handlers.OrdersIndex())
+	// r.Get("/orders/search", handlers.OrdersSearch())
+	// r.Get("/orders/{id}", handlers.OrderDetail())
+
+	// r.Get("/products", handlers.ProductsIndex())
+	// r.Get("/products/search", handlers.ProductsSearch())
+
+	// r.Get("/employees", handlers.EmployeesIndex())
+	// r.Get("/employees/search", handlers.EmployeesSearch())
+
+	// r.Get("/suppliers", handlers.SuppliersIndex())
+	// r.Get("/suppliers/search", handlers.SuppliersSearch())
+
+	// r.Get("/categories", handlers.CategoriesIndex())
+	// r.Get("/categories/search", handlers.CategoriesSearch())
+
 	log.Println("Starting server on :8080")
 	if err := http.ListenAndServe(":8080", r); err != nil {
 		log.Fatal(err)
