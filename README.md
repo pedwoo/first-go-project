@@ -42,6 +42,12 @@ A CRUD admin dashboard built with Go, HTMX, and Supabase (PostgreSQL).
    go run main.go
 ```
 
+5. In a separate terminal
+
+```bash
+   sass --watch ./static/scss/main.scss ./static/css/main.css
+```
+
 5. Open your browser at `http://localhost:8080`
 
 ## Project Structure
